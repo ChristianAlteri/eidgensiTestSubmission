@@ -52,6 +52,7 @@ export default function Home() {
             gap-8
               "
         >
+          
           {products.map((product) => (
             <ProductCard
               key={product.id}
