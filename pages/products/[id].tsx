@@ -34,7 +34,7 @@ const ProductPage: React.FC<ProductCardProps> = ({
  }) => {
   const router = useRouter();
   const { id } = router.query;
-  const [product, setProduct] = useState<ProductCardProps>(null);
+  const [product, setProduct] = useState<ProductCardProps>();
 
   useEffect(() => {
     if (id) {

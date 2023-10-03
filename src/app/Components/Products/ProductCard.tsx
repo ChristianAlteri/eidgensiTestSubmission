@@ -1,10 +1,8 @@
-// TODO: Display the username of the person who booked the wardrobe when we click on the route 'My listings'
+
 
 'use client'
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
-
 
 
 
