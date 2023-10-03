@@ -1,27 +1,46 @@
+'use client'
 
-
+import React, { useEffect, useState } from "react";
 import Container from "./Components/Container";
-import ProductCard from "./Components/Products/ProductCard";
-import getProducts from "./actions/getProducts";
+import ProductCard from "./Components/products/ProductCard";
+
+import axios from "axios";
+import { useRouter } from "next/router";
+
+interface Product {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+}
+
+export default function Home() {
+  const apiUrl = "https://dummyjson.com/products";
+  const [products, setProducts] = useState<Product[]>([]);
 
 
 
+  React.useEffect(() => {
+    axios.get(apiUrl).then((res) => {
+      const { products } = res.data; 
+      setProducts(products);
+      console.log(res.data);
+    });
+  }, []);
 
-const Home = async () => {
-   
-
-  const products = await getProducts();
-
-  if (products.length === 0) {
-    return <div> Something went wrong...</div>;
-  }
-
-
-  return (
-
+  if (!products) { return <div>Loading...</div> }
+    
+    return (
       <Container>
         <div
-       className="
+          className="
             pt-24
             grid 
             grid-cols-1 
@@ -32,17 +51,27 @@ const Home = async () => {
             2xl:grid-cols-6
             gap-8
               "
-        
         >
-          {/* {products.map((product) => (
-            <ProductCard key={product.id} title={title} />
-          ))} */}
-          HELLO
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              title={product.title}
+              description={product.description}
+              price={product.price}
+              discountPercentage={product.discountPercentage}
+              rating={product.rating}
+              stock={product.stock}
+              brand={product.brand}
+              category={product.category}
+              thumbnail={product.thumbnail}
+              images={product.images}
+            />
+          ))}
         </div>
       </Container>
+    );
+  }
+// };
 
-  );
-}
 
-
-export default Home;
