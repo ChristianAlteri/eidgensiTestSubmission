@@ -1,18 +1,12 @@
-// TODO: Display the username of the person who booked the wardrobe when we click on the route 'My listings'
-
-'use client'
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 
 
-
-
-
-
-interface ProductCardProps {
-  id: number;
+type ProductCardProps = {
+  id?: number;
   title?: string;
   description?: string;
   price?: number;
@@ -23,10 +17,9 @@ interface ProductCardProps {
   category?: string;
   thumbnail?: string;
   images?: string[];
-}
+};
 
-const ProductCard: React.FC<ProductCardProps> = ({ 
-  id,
+const ProductPage: React.FC<ProductCardProps> = ({ 
   title,
   description,
   price,
@@ -39,18 +32,25 @@ const ProductCard: React.FC<ProductCardProps> = ({
   images,
 
  }) => {
-
-  
-
-  //@ts-ignore
-  let discountSum = price - (price * discountPercentage) / 100;
-  let discountPrice = discountSum.toFixed(0); 
-  const imageUrl = images && images.length > 0 ? images[0] : "/default-image.jpg";
-
-  
   const router = useRouter();
+  const { id } = router.query;
+  const [product, setProduct] = useState<ProductCardProps>(null);
 
+  useEffect(() => {
+    if (id) {
+      const apiUrl = `https://dummyjson.com/products/${id}`; 
+
+      axios.get(apiUrl).then((res) => {
+        setProduct(res.data); 
+      });
+    }
+  }, [id]);
   
+  
+  console.log(product);
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -84,7 +84,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 font-light 
                 text-neutral-500"
             >
-              {brand}
+              {product.brand}
             </div>
             <div 
               className="
@@ -94,7 +94,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 text-neutral-500"
             >
               {/* Stock count */}
-              {stock} Left!
+              {product.stock} Left!
             </div>
           </div>
         </div>
@@ -112,9 +112,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
         >
           <Image
             //@ts-ignore
-            src={imageUrl} 
+            src={product.images[0]} 
             //@ts-ignore
-            alt={title}
+            alt={product.title}
             width={200} 
             height={200}
           />
@@ -131,7 +131,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             font-semibold 
             text-l"
         >
-          {title}
+          {product.title}
         </div>
         <div>
           <div className="flex flex-col justify-end">
@@ -150,7 +150,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   text-m 
                   text-red-500"
               >
-                Originally £{price}
+                Originally £{product.price}
               </div>
             </div>
             <div 
@@ -170,7 +170,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   text-xl 
                   text-green-500"
               >
-                Buy now £{discountPrice}
+                Buy now £{product.discountPercentage}
               </div>
             </div>
           </div>
@@ -180,4 +180,4 @@ const ProductCard: React.FC<ProductCardProps> = ({
   );
 }  
 
-export default ProductCard;
+export default ProductPage;
