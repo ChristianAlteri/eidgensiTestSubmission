@@ -69,7 +69,7 @@ const ProductPage: React.FC<ProductCardProps> = ({
   } else {
     stars = '🤩 🤩 🤩 🤩 🤩';
   }
-
+  //@ts-ignore
   let roundedPercentage = Math.round(product.discountPercentage);
 
   return (
@@ -84,6 +84,7 @@ const ProductPage: React.FC<ProductCardProps> = ({
             justifyContent: 'center',
           }}
         >
+          {/* @ts-ignore */}
           <div className="flex items-center text-neutral-500">{product.stock} Left!</div>
           <div
             className="flex items-center justify-center overflow-hidden"
@@ -103,12 +104,14 @@ const ProductPage: React.FC<ProductCardProps> = ({
         <div
           className="cursor-pointer hover:underline border-b-2 pb-2 flex justify-center font-semibold text-lg"
         >
+          {/* @ts-ignore */}
           {product.title}
         </div>
         <br />
         <div
           className="cursor-pointer hover:underline text-sm text-neutral-500 justify-center text-center items-center"
         >
+          {/* @ts-ignore */}
           {product.brand}
         </div>
         <br />
@@ -118,7 +121,9 @@ const ProductPage: React.FC<ProductCardProps> = ({
             className="w-full flex text-align-center justify-center text-sm flex-row"
           >
             <div className="font-semibold">Specs:&nbsp; </div>
+            {/* @ts-ignore */}
             {product.description}
+            {/* @ts-ignore */}
             <div className="text-sm text-red-500 border-r-2 p-5"> £{product.price} SALE
               <div className="text-sm text-green-500">%{roundedPercentage} Off</div>
               <br />
