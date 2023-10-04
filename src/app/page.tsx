@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Container from "./Components/Container";
-import ProductCard from "./Components/Products/ProductCard";
+import ProductCard from "./Components/products/ProductCard";
 
 import axios from "axios";
 import { useRouter } from "next/router";
