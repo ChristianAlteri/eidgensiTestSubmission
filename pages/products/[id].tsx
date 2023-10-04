@@ -1,7 +1,7 @@
 import 'tailwindcss/tailwind.css'
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { AiFillStar } from "react-icons/ai";
 
@@ -40,19 +40,24 @@ const ProductPage: React.FC<ProductCardProps> = ({
   const router = useRouter();
   const { id } = router.query;
   const [product, setProduct] = useState<ProductCardProps>();
+  const [products, setProducts] = useState<ProductCardProps[]>([]);
+
+
 
   useEffect(() => {
+
     if (id) {
-      const apiUrl = `https://dummyjson.com/products/${id}`; 
+      const apiUrl = `https://dummyjson.com/products/${id}`;
 
       axios.get(apiUrl).then((res) => {
-        setProduct(res.data); 
+        setProduct(res.data);
+        console.log(res.data);
       });
     }
+    
   }, [id]);
   
   
-  // console.log(product);
   if (!product) {
     return <div>Loading...</div>;
   }
@@ -75,14 +80,14 @@ const ProductPage: React.FC<ProductCardProps> = ({
     <>
     <Navbar/>
     <Container>
-
-      <div className="flex items-center text-neutral-500">
-        {product.stock} Left!
-      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="flex items-center text-neutral-500">
+          {product.stock} Left!
+        </div>
       <div
-        className="flex items-center justify-center"
+        className="flex items-center justify-center "
         style={{ width: '600px', height: '600px' }}
-      >
+        >
         <Image
           //@ts-ignore
           src={product.images[0]}
@@ -90,8 +95,10 @@ const ProductPage: React.FC<ProductCardProps> = ({
           alt={product.title}
           width={600}
           height={600}
-        />
+          />
       </div>
+      </div>
+      
       <div
         className="
         cursor-pointer 
@@ -162,21 +169,8 @@ const ProductPage: React.FC<ProductCardProps> = ({
       <div 
       className='
       flex
-      border-t-2
+
       '>
-        <div
-        className="flex items-center justify-center"
-        style={{ width: '600px', height: '600px' }}
-      >
-        <Image
-          //@ts-ignore
-          src={product.images[0]}
-          //@ts-ignore
-          alt={product.title}
-          width={600}
-          height={600}
-        />
-      </div>
       </div>
 
     </Container> 
