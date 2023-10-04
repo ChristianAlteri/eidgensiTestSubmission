@@ -1,7 +1,12 @@
+import 'tailwindcss/tailwind.css'
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { AiFillStar } from "react-icons/ai";
+
+import Container from "../../src/app/Components/Container";
+import Navbar from '../../src/app/Components/Navbar/Navbar';
 
 
 
@@ -47,136 +52,135 @@ const ProductPage: React.FC<ProductCardProps> = ({
   }, [id]);
   
   
-  console.log(product);
+  // console.log(product);
   if (!product) {
     return <div>Loading...</div>;
   }
 
+  let stars = ""; 
+  //@ts-ignore
+  let roundedRating = Math.round(product.rating);
+    if (roundedRating === 1) {
+      stars = "🤩";
+    } else if (roundedRating === 2) {
+        stars = "🤩 🤩";
+    } else if (roundedRating === 3) {
+        stars = "🤩 🤩 🤩";
+    } else if (roundedRating === 4) {
+        stars = "🤩 🤩 🤩 🤩";
+    } else {
+        stars = "🤩 🤩 🤩 🤩 🤩"; 
+    }
   return (
-    <div
-      className="
-        border-4 
-        border-gray-400
-        rounded-xl
-        p-2
-      "
-    >
-      <div
-        className="col-span-1 group"
-      >
-        <div className="flex flex-col gap-2 w-full">
-          <div 
-            className="
-              flex
-              justify-between
-              text-neutral-400
-              text-sm
-            "
-          >
-            {/* Brand */}
-            <div 
-              onClick={() => router.push(`/products/${brand}`)} 
-              className="
-                cursor-pointer
-                hover:underline
-                flex 
-                justify-start 
-                font-light 
-                text-neutral-500"
-            >
-              {product.brand}
-            </div>
-            <div 
-              className="
-                flex 
-                justify-end 
-                font-light 
-                text-neutral-500"
-            >
-              {/* Stock count */}
-              {product.stock} Left!
-            </div>
-          </div>
-        </div>
-        <div 
-          className="
-            flex
-            flex-col
-            justify-center
-            items-center
-          "
-          style={{
-            width: '30vh',   
-            height: '30vh'   
-          }}
-        >
-          <Image
-            //@ts-ignore
-            src={product.images[0]} 
-            //@ts-ignore
-            alt={product.title}
-            width={200} 
-            height={200}
-          />
-        </div>
-        <div 
-          onClick={() => router.push(`/products/${id}`)} 
-          className="
-            cursor-pointer
-            hover:underline
-            border-b-2
-            pb-2 
-            flex 
-            justify-center 
-            font-semibold 
-            text-l"
-        >
-          {product.title}
-        </div>
-        <div>
-          <div className="flex flex-col justify-end">
-            <div 
-              className="
-                text-s 
-                flex 
-                justify-center 
-                flex-row 
-                items-center 
-                gap-1
-              "
-            >
-              <div 
-                className="
-                  text-m 
-                  text-red-500"
-              >
-                Originally £{product.price}
-              </div>
-            </div>
-            <div 
-              className="
-                text-m 
-                flex 
-                justify-center 
-                flex-row 
-                items-center 
-                gap-1"
-            >
-              <div 
-                onClick={() => router.push(`/products/${id}`)} 
-                className="
-                  cursor-pointer 
-                  hover:underline 
-                  text-xl 
-                  text-green-500"
-              >
-                Buy now £{product.discountPercentage}
-              </div>
-            </div>
-          </div>
-        </div>
+    <>
+    <Navbar/>
+    <Container>
+
+      <div className="flex items-center text-neutral-500">
+        {product.stock} Left!
       </div>
-    </div>
+      <div
+        className="flex items-center justify-center"
+        style={{ width: '600px', height: '600px' }}
+      >
+        <Image
+          //@ts-ignore
+          src={product.images[0]}
+          //@ts-ignore
+          alt={product.title}
+          width={600}
+          height={600}
+        />
+      </div>
+      <div
+        className="
+        cursor-pointer 
+        hover:underline 
+        border-b-2 
+        pb-2 
+        flex 
+        justify-center 
+        font-semibold 
+        text-lg"
+      >
+        {product.title}
+      </div>
+      <br />
+      <div
+        className="
+        cursor-pointer 
+        hover:underline 
+        text-sm 
+        text-neutral-500
+        justify-center
+        text-center
+        items-center
+        "
+      >
+        {product.brand}
+      </div>
+      <br />
+      <div className='
+      flex
+      col-span-2
+      gap-2
+      '>
+        <div
+          className=" 
+          w-full
+          pb-10
+          flex 
+          text-align-center
+          justify-center 
+          text-sm"
+        >
+          <div className='font-semibold'>Specs:&nbsp; </div>
+                {product.description}
+
+        <div className="text-sm text-red-500 border-r-2 p-5"> £{product.price} SALE
+        <div
+          className=" text-sm text-green-500">
+           %{product.discountPercentage} Off
+        </div>
+        <br />
+        <div className='
+        flex
+        '>
+          {stars}
+        </div>
+        </div>
+
+        <button className='
+        hover:underline
+        p-4
+        '
+        >Buy now</button>
+
+      </div>
+      </div>
+
+      <div 
+      className='
+      flex
+      border-t-2
+      '>
+        <div
+        className="flex items-center justify-center"
+        style={{ width: '600px', height: '600px' }}
+      >
+        <Image
+          //@ts-ignore
+          src={product.images[0]}
+          //@ts-ignore
+          alt={product.title}
+          width={600}
+          height={600}
+        />
+      </div>
+      </div>
+
+    </Container> 
+    </>
   );
 }  
 
