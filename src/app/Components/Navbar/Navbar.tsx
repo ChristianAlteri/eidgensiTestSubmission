@@ -1,38 +1,21 @@
 'use client'
-
-
-
+import { useRouter } from 'next/navigation';
 import Container from "../Container";
 
-
-
-
-
-
-
-
 const Navbar = () => {
-    return(
-        <div className='fixed w-full bg-white z-10 shadow-sm' >
-            <div
-                className='py-4 
-                border-b-[1px]'
-                >
-                    <Container>
-                        <div 
-                            className="
-                            flex
-                            flex-row
-                            items-center
-                            justify-center
-                            gap-3
-                            md: gap-0
-                            text-center
-                            "
-                            >
-                                TITLE
-                        </div>
-                    </Container>
+    const router = useRouter();
+    return (
+        <div className='fixed w-full bg-white z-10 shadow-sm'>
+            <div className='py-4 border-b-[1px] flex'>
+                <Container>
+                    <div className="flex ">
+                                <div className="flex items-center justify-center cursor-pointer" onClick={() => router.push(`/`)}>
+                                    <div>TEST SUBMISSION</div>
+                                </div>
+
+                    </div>
+
+                </Container>
             </div>
         </div>
     );

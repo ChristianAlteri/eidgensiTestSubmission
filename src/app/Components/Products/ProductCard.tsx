@@ -1,13 +1,6 @@
-
-
 'use client'
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
-
-
-
-
 
 interface ProductCardProps {
   id: number;
@@ -23,7 +16,7 @@ interface ProductCardProps {
   images?: string[];
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ 
+const ProductCard: React.FC<ProductCardProps> = ({
   id,
   title,
   description,
@@ -35,20 +28,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
   category,
   thumbnail,
   images,
-
- }) => {
-
-  
-
+}) => {
   //@ts-ignore
   let discountSum = price - (price * discountPercentage) / 100;
-  let discountPrice = discountSum.toFixed(0); 
+  let discountPrice = discountSum.toFixed(0);
   const imageUrl = images && images.length > 0 ? images[0] : "/default-image.jpg";
 
-  
   const router = useRouter();
-
-  
 
   return (
     <div
@@ -59,11 +45,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
         p-2
       "
     >
-      <div
-        className="col-span-1 group"
-      >
+      <div className="col-span-1 group">
         <div className="flex flex-col gap-2 w-full">
-          <div 
+          <div
             className="
               flex
               justify-between
@@ -72,8 +56,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
             "
           >
             {/* Brand */}
-            <div 
-              onClick={() => router.push(`/products/${brand}`)} 
+            <div
+              onClick={() => router.push(`/products/${brand}`)}
               className="
                 cursor-pointer
                 hover:underline
@@ -84,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             >
               {brand}
             </div>
-            <div 
+            <div
               className="
                 flex 
                 justify-end 
@@ -96,29 +80,29 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </div>
           </div>
         </div>
-        <div 
-          className="
-            flex
-            flex-col
-            justify-center
-            items-center
-          "
-          style={{
-            width: '30vh',   
-            height: '30vh'   
-          }}
-        >
-          <Image
-            //@ts-ignore
-            src={imageUrl} 
-            //@ts-ignore
-            alt={title}
-            width={200} 
-            height={200}
-          />
+
+        <div className="flex flex-col justify-center items-center overflow-hidden">
+          <div className="flex items-center justify-center p-3">
+            <div
+              style={{
+                width: '20vh',
+                height: '20vh'
+              }}
+              className="flex items-center justify-center w-1/2 h-1/2 overflow-hidden">
+              <Image
+                //@ts-ignore
+                src={imageUrl}
+                //@ts-ignore
+                alt={title}
+                width={400}
+                height={400}
+              />
+            </div>
+          </div>
         </div>
-        <div 
-          onClick={() => router.push(`/products/${id}`)} 
+
+        <div
+          onClick={() => router.push(`/products/${id}`)}
           className="
             cursor-pointer
             hover:underline
@@ -133,7 +117,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         <div>
           <div className="flex flex-col justify-end">
-            <div 
+            <div
               className="
                 text-s 
                 flex 
@@ -143,7 +127,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 gap-1
               "
             >
-              <div 
+              <div
                 className="
                   text-m 
                   text-red-500"
@@ -151,7 +135,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 Originally £{price}
               </div>
             </div>
-            <div 
+            <div
               className="
                 text-m 
                 flex 
@@ -160,8 +144,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 items-center 
                 gap-1"
             >
-              <div 
-                onClick={() => router.push(`/products/${id}`)} 
+              <div
+                onClick={() => router.push(`/products/${id}`)}
                 className="
                   cursor-pointer 
                   hover:underline 
@@ -176,6 +160,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
     </div>
   );
-}  
+}
 
 export default ProductCard;
